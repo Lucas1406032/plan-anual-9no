@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planificación Anual · Matemática 9° EBI</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f2eb;
+    --ink: #1a1714;
+    --muted: #7a7268;
+    --rule: #d4cec4;
+    --stat-col: #c84b2f;
+    --stat-bg: #fdf1ee;
+    --var-col: #2563a8;
+    --var-bg: #eef4fd;
+    --geo-col: #2a7a4b;
+    --geo-bg: #edf7f2;
+    --accent: #e8b84b;
+    --card: #ffffff;
+    --shadow: 0 2px 16px rgba(26,23,20,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Mono', monospace;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    border: 40px solid var(--accent);
+    border-radius: 50%;
+    opacity: .12;
+  }
+  .site-header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 200px;
+    width: 160px; height: 160px;
+    background: var(--accent);
+    opacity: .06;
+    transform: rotate(45deg);
+  }
+  .header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: .75rem;
+  }
+  .header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.1;
+    margin-bottom: .5rem;
+  }
+  .header-sub {
+    font-size: .85rem;
+    color: #a09890;
+    letter-spacing: .04em;
+  }
+  .header-meta {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .meta-pill {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 100px;
+    padding: .35rem 1rem;
+    font-size: .72rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #c8c0b8;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-section {
+    background: var(--ink);
+    padding: 0 2rem 2rem;
+    border-bottom: 3px solid var(--accent);
+  }
+  .progress-label {
+    font-size: .65rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: #6a6058;
+    margin-bottom: .6rem;
+  }
+  .progress-track {
+    height: 6px;
+    background: rgba(255,255,255,.1);
+    border-radius: 3px;
+    display: flex;
+    gap: 3px;
+    overflow: hidden;
+  }
+  .progress-seg {
+    height: 100%;
+    border-radius: 2px;
+    transition: opacity .3s;
+  }
+  .progress-seg.stat { background: var(--stat-col); flex: 6; }
+  .progress-seg.var  { background: var(--var-col);  flex: 14; }
+  .progress-seg.geo  { background: var(--geo-col);  flex: 12; }
+  .progress-weeks {
+    display: flex;
+    justify-content: space-between;
+    margin-top: .5rem;
+    font-size: .65rem;
+    color: #6a6058;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+
+  /* ── OVERVIEW CARDS ── */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  @media (max-width: 640px) { .overview-grid { grid-template-columns: 1fr; } }
+
+  .ov-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border-top: 4px solid transparent;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .ov-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(26,23,20,0.13); }
+  .ov-card.stat { border-color: var(--stat-col); }
+  .ov-card.var  { border-color: var(--var-col); }
+  .ov-card.geo  { border-color: var(--geo-col); }
+  .ov-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.8rem;
+    line-height: 1;
+    margin-bottom: .25rem;
+  }
+  .ov-card.stat .ov-num { color: var(--stat-col); }
+  .ov-card.var  .ov-num { color: var(--var-col); }
+  .ov-card.geo  .ov-num { color: var(--geo-col); }
+  .ov-unit { font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .ov-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-top: .75rem;
+  }
+  .ov-hint { font-size: .72rem; color: var(--muted); margin-top: .25rem; }
+
+  /* ── SECTION BLOCK ── */
+  .section-block {
+    margin-bottom: 2.5rem;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.4rem 1.75rem;
+    cursor: pointer;
+    user-select: none;
+    transition: filter .15s;
+    position: relative;
+  }
+  .section-header:hover { filter: brightness(.96); }
+
+  .section-block.stat .section-header { background: var(--stat-bg); border-left: 5px solid var(--stat-col); }
+  .section-block.var  .section-header { background: var(--var-bg);  border-left: 5px solid var(--var-col); }
+  .section-block.geo  .section-header { background: var(--geo-bg);  border-left: 5px solid var(--geo-col); }
+
+  .section-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: grid; place-items: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .stat .section-icon { background: var(--stat-col); }
+  .var  .section-icon { background: var(--var-col); }
+  .geo  .section-icon { background: var(--geo-col); }
+
+  .section-title-wrap { flex: 1; }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+  }
+  .section-weeks-badge {
+    font-size: .67rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: .1rem;
+  }
+
+  .chevron {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: rgba(0,0,0,.08);
+    display: grid; place-items: center;
+    transition: transform .3s;
+    flex-shrink: 0;
+    font-size: .8rem;
+  }
+  .section-block.open .chevron { transform: rotate(180deg); }
+
+  /* ── SECTION BODY ── */
+  .section-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .45s cubic-bezier(.4,0,.2,1);
+    background: var(--card);
+  }
+  .section-block.open .section-body { max-height: 4000px; }
+  .section-body-inner { padding: 1.75rem; }
+
+  /* ── TABS ── */
+  .tabs { display: flex; gap: .5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .tab-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: .72rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: .45rem 1rem;
+    border: 1.5px solid var(--rule);
+    border-radius: 100px;
+    background: transparent;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all .2s;
+  }
+  .tab-btn:hover { border-color: var(--ink); color: var(--ink); }
+  .stat .tab-btn.active { background: var(--stat-col); border-color: var(--stat-col); color: #fff; }
+  .var  .tab-btn.active { background: var(--var-col);  border-color: var(--var-col);  color: #fff; }
+  .geo  .tab-btn.active { background: var(--geo-col);  border-color: var(--geo-col);  color: #fff; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeIn .3s ease; }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(6px); } to { opacity:1; transform: none; } }
+
+  /* ── CONTENT STYLES ── */
+  .subsection-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: .8rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .content-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+  }
+  .content-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+    font-size: .83rem;
+    line-height: 1.5;
+    padding: .7rem 1rem;
+    background: var(--bg);
+    border-radius: 8px;
+  }
+  .content-list li .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: .4rem;
+  }
+  .stat .content-list li .dot { background: var(--stat-col); }
+  .var  .content-list li .dot { background: var(--var-col); }
+  .geo  .content-list li .dot { background: var(--geo-col); }
+
+  /* objectives table */
+  .obj-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 600px) { .obj-grid { grid-template-columns: 1fr; } }
+
+  .obj-card {
+    border-radius: 10px;
+    border: 1.5px solid var(--rule);
+    padding: 1rem 1.1rem;
+    font-size: .8rem;
+  }
+  .obj-label {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: .72rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: .5rem;
+  }
+  .stat .obj-label { color: var(--stat-col); }
+  .var  .obj-label { color: var(--var-col); }
+  .geo  .obj-label { color: var(--geo-col); }
+
+  .obj-text { color: var(--ink); line-height: 1.55; }
+
+  .indicators-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+  }
+  .indicators-list li {
+    font-size: .78rem;
+    padding: .45rem .7rem;
+    border-radius: 6px;
+    line-height: 1.5;
+    display: flex; gap: .5rem; align-items: flex-start;
+  }
+  .stat .indicators-list li { background: var(--stat-bg); }
+  .var  .indicators-list li { background: var(--var-bg); }
+  .geo  .indicators-list li { background: var(--geo-bg); }
+  .indicators-list li::before { content: '→'; flex-shrink:0; font-size: .72rem; margin-top: .15rem; }
+  .stat .indicators-list li::before { color: var(--stat-col); }
+  .var  .indicators-list li::before { color: var(--var-col); }
+  .geo  .indicators-list li::before { color: var(--geo-col); }
+
+  /* weekly timeline */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .week-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 1rem;
+    align-items: center;
+  }
+  .week-label {
+    font-size: .68rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: right;
+  }
+  .week-bar-wrap { position: relative; }
+  .week-bar {
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding: 0 .75rem;
+    font-size: .72rem;
+    color: white;
+    font-weight: 500;
+    letter-spacing: .03em;
+    position: relative;
+    overflow: hidden;
+  }
+  .week-bar::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 40%; height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,.15));
+  }
+  .stat .week-bar { background: var(--stat-col); }
+  .var  .week-bar { background: var(--var-col); }
+  .geo  .week-bar { background: var(--geo-col); }
+
+  /* methodology callout */
+  .method-box {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 1.2rem 1.3rem;
+    border-left: 3px solid var(--accent);
+    margin-bottom: 1rem;
+    font-size: .82rem;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .method-box strong { font-family: 'Syne', sans-serif; font-weight: 700; }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    background: var(--ink);
+    color: #6a6058;
+    text-align: center;
+    padding: 2rem;
+    font-size: .7rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-top: 2rem;
+  }
+
+  /* print button */
+  .top-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: .75rem;
+    margin-bottom: 2rem;
+  }
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: .5rem 1.2rem;
+    border-radius: 8px;
+    border: 1.5px solid var(--ink);
+    background: transparent;
+    cursor: pointer;
+    transition: all .2s;
+    color: var(--ink);
+  }
+  .btn:hover { background: var(--ink); color: var(--bg); }
+  .btn-primary { background: var(--ink); color: var(--bg); }
+  .btn-primary:hover { background: #3a3530; border-color: #3a3530; }
+
+  /* ── BIBLIOGRAPHY ── */
+  .bib-card {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: .9rem 1.1rem;
+    font-size: .8rem;
+    line-height: 1.5;
+    border: 1px solid var(--rule);
+    transition: border-color .2s;
+  }
+  .bib-card:hover { border-color: #b0a898; }
+  .bib-badge {
+    display: inline-block;
+    font-size: .62rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: .15rem .55rem;
+    border-radius: 4px;
+    margin-bottom: .4rem;
+    font-weight: 600;
+  }
+  .bib-digital { background: #eef4fd; color: #2563a8; }
+  .bib-libro   { background: #edf7f2; color: #2a7a4b; }
+  .bib-inst    { background: #fdf1ee; color: #c84b2f; }
+  .bib-title   { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--ink); margin-bottom: .2rem; }
+  .bib-author  { color: var(--muted); font-size: .75rem; }
+  .bib-link {
+    display: inline-block;
+    margin-top: .35rem;
+    font-size: .72rem;
+    color: #2563a8;
+    text-decoration: none;
+    border-bottom: 1px solid #bfcfe8;
+    transition: border-color .2s;
+  }
+  .bib-link:hover { border-color: #2563a8; }
+
+  @media print {
+    .section-body { max-height: none !important; }
+    .top-actions, .chevron { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-tag">Versión Final · Comisión de Programa</div>
+  <h1 class="header-title">Planificación Anual<br><em>Matemática</em></h1>
+  <div class="header-sub">9° año — Educación Básica Integrada (EBI) · DGES</div>
+  <div class="header-meta">
+    <span class="meta-pill">4 horas semanales</span>
+    <span class="meta-pill">32 semanas totales</span>
+    <span class="meta-pill">3 bloques temáticos</span>
+  </div>
+</header>
+
+<!-- PROGRESS -->
+<div class="progress-section">
+  <div class="progress-label">Distribución de semanas</div>
+  <div class="progress-track">
+    <div class="progress-seg stat" title="Estadística: 6 semanas"></div>
+    <div class="progress-seg var"  title="Variable: 14 semanas"></div>
+    <div class="progress-seg geo"  title="Geometría: 12 semanas"></div>
+  </div>
+  <div class="progress-weeks">
+    <span style="color:#c84b2f">■ Estadística (6 sem)</span>
+    <span style="color:#2563a8">■ Variable (14 sem)</span>
+    <span style="color:#2a7a4b">■ Geometría (12 sem)</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <div class="top-actions">
+    <button class="btn" onclick="expandAll()">Expandir todo</button>
+    <button class="btn" onclick="collapseAll()">Contraer todo</button>
+    <button class="btn btn-primary" onclick="window.print()">⎙ Imprimir</button>
+  </div>
+
+  <!-- OVERVIEW CARDS -->
+  <div class="overview-grid">
+    <div class="ov-card stat" onclick="toggleSection('stat-block')">
+      <div class="ov-num">6</div>
+      <div class="ov-unit">semanas</div>
+      <div class="ov-name">Estadística</div>
+      <div class="ov-hint">Descriptiva · Medidas · Variables</div>
+    </div>
+    <div class="ov-card var" onclick="toggleSection('var-block')">
+      <div class="ov-num">14</div>
+      <div class="ov-unit">semanas</div>
+      <div class="ov-name">Variable</div>
+      <div class="ov-hint">Polinomios · Funciones · Sistemas</div>
+    </div>
+    <div class="ov-card geo" onclick="toggleSection('geo-block')">
+      <div class="ov-num">12</div>
+      <div class="ov-unit">semanas</div>
+      <div class="ov-name">Geometría</div>
+      <div class="ov-hint">Pitágoras · Trigonometría · Sólidos</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       BLOQUE 1: ESTADÍSTICA
+  ═══════════════════════════════════════════ -->
+  <div class="section-block stat" id="stat-block">
+    <div class="section-header" onclick="toggleSection('stat-block')">
+      <div class="section-icon">📊</div>
+      <div class="section-title-wrap">
+        <div class="section-title">Estadística Descriptiva</div>
+        <div class="section-weeks-badge">6 semanas · 24 horas clase</div>
+      </div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="section-body-inner">
+        <div class="tabs stat">
+          <button class="tab-btn active" onclick="switchTab(this,'stat','contenidos')">Contenidos</button>
+          <button class="tab-btn" onclick="switchTab(this,'stat','previos')">Conocimientos previos</button>
+          <button class="tab-btn" onclick="switchTab(this,'stat','objetivos')">Objetivos & Evaluación</button>
+          <button class="tab-btn" onclick="switchTab(this,'stat','metodologia')">Metodología</button>
+          <button class="tab-btn" onclick="switchTab(this,'stat','cronograma')">Cronograma</button>
+        </div>
+
+        <!-- CONTENIDOS -->
+        <div class="tab-panel active" id="stat-contenidos">
+          <div class="subsection-title">Contenidos del bloque</div>
+          <ul class="content-list">
+            <li><span class="dot"></span>Estadística descriptiva: representación de datos para <strong>variables discretas y continuas</strong></li>
+            <li><span class="dot"></span><strong>Medidas de centralización:</strong> media aritmética, mediana y moda</li>
+            <li><span class="dot"></span><strong>Otras medias:</strong> ponderada, geométrica y armónica (según contexto)</li>
+            <li><span class="dot"></span><strong>Medidas de dispersión:</strong> rango, varianza y desviación típica (estándar)</li>
+            <li><span class="dot"></span><strong>Coeficiente de variación</strong> para comparar conjuntos de datos</li>
+            <li><span class="dot"></span>Tablas de frecuencias: frecuencia absoluta, relativa y porcentual</li>
+            <li><span class="dot"></span>Gráficos: barras, histogramas y diagramas circulares</li>
+          </ul>
+        </div>
+
+        <!-- PREVIOS -->
+        <div class="tab-panel" id="stat-previos">
+          <div class="subsection-title">Conocimientos previos requeridos</div>
+          <ul class="content-list">
+            <li><span class="dot"></span>Análisis y procesamiento de datos estadísticos básicos</li>
+            <li><span class="dot"></span>Elaboración de tablas de frecuencias para variables discretas</li>
+            <li><span class="dot"></span>Cálculo de medidas de centralización y dispersión básicas</li>
+            <li><span class="dot"></span>Representaciones gráficas elementales (barras, pictogramas)</li>
+          </ul>
+        </div>
+
+        <!-- OBJETIVOS -->
+        <div class="tab-panel" id="stat-objetivos">
+          <div class="subsection-title">Objetivos de aprendizaje e indicadores</div>
+          <div class="obj-grid">
+
+            <div class="obj-card">
+              <div class="obj-label">Conceptos básicos</div>
+              <div class="obj-text">Reconocer y diferenciar <strong>población, muestra, individuo, dato y variable</strong> en contextos diversos.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Identifica y define correctamente cada concepto en situaciones reales</li>
+                <li>Aplica procedimientos estadísticos para recolectar y organizar datos</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Clasificación de variables</div>
+              <div class="obj-text">Clasificar variables según su tipo (cuantitativas / cualitativas).</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Clasifica como discreta, continua, nominal u ordinal justificando</li>
+                <li>Explica cómo el tipo de variable condiciona el análisis</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Tablas y gráficos</div>
+              <div class="obj-text">Elaborar tablas de frecuencias y construir gráficos adecuados.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Organiza datos en tablas completas con fr. absoluta y relativa</li>
+                <li>Selecciona el gráfico más adecuado y lo construye correctamente</li>
+                <li>Usa herramientas tecnológicas (hojas de cálculo)</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Medidas de centralización</div>
+              <div class="obj-text">Calcular e interpretar media, mediana, moda y otras medias.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Calcula correctamente las medidas en datos reales</li>
+                <li>Reconoce la influencia de valores atípicos en la media</li>
+                <li>Justifica cuál medida es más representativa según el contexto</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Medidas de dispersión</div>
+              <div class="obj-text">Determinar rango, varianza y desviación estándar.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Calcula las medidas manualmente y con tecnología</li>
+                <li>Compara dispersión entre dos o más conjuntos</li>
+                <li>Complementa la media con medidas de dispersión</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Coeficiente de variación</div>
+              <div class="obj-text">Aplicar el CV para comparar variabilidad entre conjuntos.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Calcula el CV para distintos conjuntos</li>
+                <li>Decide cuál tiene mayor o menor variabilidad justificando</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- METODOLOGÍA -->
+        <div class="tab-panel" id="stat-metodologia">
+          <div class="subsection-title">Sugerencias metodológicas</div>
+          <div class="method-box">
+            <strong>Punto de partida situado:</strong> Iniciar con situaciones reales o de interés del estudiantado que requieran recolectar, organizar y representar datos.
+          </div>
+          <div class="method-box">
+            <strong>Análisis crítico:</strong> Promover la lectura crítica de información estadística vinculada a problemáticas sociales, distribución de recursos o brechas de género.
+          </div>
+          <div class="method-box">
+            <strong>Elección fundamentada:</strong> Propiciar el reconocimiento de distintas medias (ponderada, geométrica, armónica) y favorecer la elección fundamentada del tipo de media más adecuado.
+          </div>
+          <div class="method-box">
+            <strong>Herramientas digitales:</strong> Incorporar hojas de cálculo y software estadístico para el tratamiento y visualización de datos.
+          </div>
+          <div class="method-box">
+            <strong>Trabajo colaborativo:</strong> Favorecer la discusión de estrategias, la argumentación de decisiones y el análisis del error como parte del aprendizaje.
+          </div>
+        </div>
+
+        <!-- CRONOGRAMA -->
+        <div class="tab-panel" id="stat-cronograma">
+          <div class="subsection-title">Distribución semanal sugerida</div>
+          <div class="timeline">
+            <div class="week-row">
+              <div class="week-label">Semana 1</div>
+              <div class="week-bar-wrap"><div class="week-bar stat">Conceptos básicos · Población, muestra, individuo, variable</div></div>
+            </div>
+            <div class="week-row">
+              <div class="week-label">Semana 2</div>
+              <div class="week-bar-wrap"><div class="week-bar stat">Clasificación de variables · Tablas de frecuencias</div></div>
+            </div>
+            <div class="week-row">
+              <div class="week-label">Semana 3</div>
+              <div class="week-bar-wrap"><div class="week-bar stat">Gráficos estadísticos · Barras, histogramas, circulares</div></div>
+            </div>
+            <div class="week-row">
+              <div class="week-label">Semana 4</div>
+              <div class="week-bar-wrap"><div class="week-bar stat">Medidas de centralización · Media, mediana, moda</div></div>
+            </div>
+            <div class="week-row">
+              <div class="week-label">Semana 5</div>
+              <div class="week-bar-wrap"><div class="week-bar stat">Otras medias · Medidas de dispersión</div></div>
+            </div>
+            <div class="week-row">
+              <div class="week-label">Semana 6</div>
+              <div class="week-bar-wrap"><div class="week-bar stat">Coeficiente de variación · Integración y evaluación</div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       BLOQUE 2: VARIABLE
+  ═══════════════════════════════════════════ -->
+  <div class="section-block var" id="var-block">
+    <div class="section-header" onclick="toggleSection('var-block')">
+      <div class="section-icon">📐</div>
+      <div class="section-title-wrap">
+        <div class="section-title">Variable · Álgebra y Funciones</div>
+        <div class="section-weeks-badge">14 semanas · 56 horas clase</div>
+      </div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="section-body-inner">
+        <div class="tabs var">
+          <button class="tab-btn active" onclick="switchTab(this,'var','contenidos')">Contenidos</button>
+          <button class="tab-btn" onclick="switchTab(this,'var','previos')">Conocimientos previos</button>
+          <button class="tab-btn" onclick="switchTab(this,'var','objetivos')">Objetivos & Evaluación</button>
+          <button class="tab-btn" onclick="switchTab(this,'var','metodologia')">Metodología</button>
+          <button class="tab-btn" onclick="switchTab(this,'var','cronograma')">Cronograma</button>
+        </div>
+
+        <!-- CONTENIDOS -->
+        <div class="tab-panel active" id="var-contenidos">
+          <div class="subsection-title">Contenidos del bloque</div>
+          <ul class="content-list">
+            <li><span class="dot"></span><strong>Polinomios:</strong> propiedad distributiva con énfasis en factorización, productos notables</li>
+            <li><span class="dot"></span><strong>Ecuaciones de 2° grado:</strong> resolución de incompletas y completas (factorización, completar cuadrados, fórmula cuadrática)</li>
+            <li><span class="dot"></span><strong>Funciones polinómicas de 2° grado:</strong> f(x)=ax², ax²+c, ax²+bx, ax²+bx+c — bosquejo gráfico</li>
+            <li><span class="dot"></span><strong>Inecuaciones de 2° grado:</strong> resolución analítica y gráfica</li>
+            <li><span class="dot"></span><strong>Ecuación de la recta</strong> y ecuaciones de 1° grado con dos incógnitas</li>
+            <li><span class="dot"></span><strong>Sistemas de ecuaciones lineales:</strong> método gráfico y analítico (escalerización)</li>
+          </ul>
+        </div>
+
+        <!-- PREVIOS -->
+        <div class="tab-panel" id="var-previos">
+          <div class="subsection-title">Conocimientos previos requeridos</div>
+          <ul class="content-list">
+            <li><span class="dot"></span>Operaciones básicas y sus propiedades en ℝ</li>
+            <li><span class="dot"></span>Interpretación y manipulación de expresiones algebraicas; uso de letras para generalizar</li>
+            <li><span class="dot"></span>Resolución de ecuaciones e inecuaciones de 1° grado con una incógnita</li>
+            <li><span class="dot"></span>Concepto de función: dominio, raíces, ordenada al origen, signo</li>
+            <li><span class="dot"></span>Representación de funciones polinómicas de 1° grado</li>
+          </ul>
+        </div>
+
+        <!-- OBJETIVOS -->
+        <div class="tab-panel" id="var-objetivos">
+          <div class="subsection-title">Objetivos de aprendizaje e indicadores</div>
+          <div class="obj-grid">
+
+            <div class="obj-card">
+              <div class="obj-label">Polinomios</div>
+              <div class="obj-text">Aplicar la propiedad distributiva y productos notables; usar factorización como herramienta clave.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Aplica distributiva y productos notables para desarrollar o factorizar</li>
+                <li>Reconoce patrones y formula conjeturas sobre factorización</li>
+                <li>Selecciona estrategias adecuadas de desarrollo/factorización</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Ecuaciones de 2° grado</div>
+              <div class="obj-text">Resolver por factorización o completar cuadrados, argumentando procedimientos.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Resuelve completas e incompletas con el método correcto</li>
+                <li>Compara estrategias y argumenta la elección del método</li>
+                <li>Simplifica radicales y racionaliza expresiones resultantes</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Fórmula cuadrática</div>
+              <div class="obj-text">Utilizar la fórmula general deducida a partir de completar cuadrados.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Aplica la fórmula general correctamente</li>
+                <li>Analiza el discriminante para discutir el número de raíces</li>
+                <li>Verifica y contrasta soluciones críticamente</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Funciones cuadráticas</div>
+              <div class="obj-text">Interpretar y bosquejar funciones cuadráticas identificando sus características.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Identifica raíces, ordenada al origen, extremo, concavidad</li>
+                <li>Bosqueja correctamente la parábola con elementos esenciales</li>
+                <li>Modela situaciones contextualizadas con funciones de 2°</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Coeficientes y gráfica</div>
+              <div class="obj-text">Establecer relaciones entre la expresión analítica y el comportamiento gráfico.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Usa herramientas digitales para observar cambios al variar parámetros</li>
+                <li>Interpreta cómo los coeficientes determinan la posición y forma</li>
+                <li>Comunica razonamientos y conclusiones con precisión</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Inecuaciones cuadráticas</div>
+              <div class="obj-text">Resolver inecuaciones cuadráticas analítica y gráficamente.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Resuelve analíticamente y expresa la solución en intervalos</li>
+                <li>Representa gráficamente e identifica los intervalos solución</li>
+                <li>Contrasta las soluciones de ambos métodos</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Ecuaciones lineales con 2 incógnitas</div>
+              <div class="obj-text">Interpretar ecuaciones lineales y reconocer su gráfica como una recta.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Determina pares ordenados que satisfacen la ecuación</li>
+                <li>Representa gráficamente trazando la recta correctamente</li>
+                <li>Reconoce y describe características de la recta</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Sistemas de ecuaciones</div>
+              <div class="obj-text">Resolver sistemas lineales por método gráfico y analítico (escalerización).</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Elige y aplica estrategias gráficas o analíticas apropiadas</li>
+                <li>Justifica la elección del método y clasifica el sistema</li>
+                <li>Usa herramientas digitales para interpretar las soluciones</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- METODOLOGÍA -->
+        <div class="tab-panel" id="var-metodologia">
+          <div class="subsection-title">Sugerencias metodológicas</div>
+          <div class="method-box">
+            <strong>Factorización como eje:</strong> Profundizar en la propiedad distributiva con énfasis en factorización. Usar productos notables y factorización como herramientas para simplificar expresiones y resolver ecuaciones.
+          </div>
+          <div class="method-box">
+            <strong>Construcción de la fórmula:</strong> Habilitar el uso de la fórmula cuadrática <em>luego</em> de trabajar con completar cuadrados, permitiendo que los estudiantes deducan su origen. Expresar soluciones simplificadas (√12 = 2√3).
+          </div>
+          <div class="method-box">
+            <strong>Pasaje bidireccional:</strong> Propiciar el movimiento entre expresión analítica y representación gráfica. Utilizar herramientas digitales para explorar traslaciones y cambios de parámetros en f(x)=ax²+bx+c.
+          </div>
+          <div class="method-box">
+            <strong>Escalerización con proyección:</strong> Priorizar el método de escalerización para sistemas de ecuaciones, con la perspectiva de su uso futuro en programación.
+          </div>
+          <div class="method-box">
+            <strong>Verificación sistemática:</strong> Promover la verificación de soluciones como práctica habitual tanto algebraica como gráficamente.
+          </div>
+        </div>
+
+        <!-- CRONOGRAMA -->
+        <div class="tab-panel" id="var-cronograma">
+          <div class="subsection-title">Distribución semanal sugerida</div>
+          <div class="timeline">
+            <div class="week-row"><div class="week-label">Sem. 1–2</div><div class="week-bar-wrap"><div class="week-bar var">Polinomios · Distributiva · Productos notables</div></div></div>
+            <div class="week-row"><div class="week-label">Sem. 3–4</div><div class="week-bar-wrap"><div class="week-bar var">Factorización · Estrategias y aplicaciones</div></div></div>
+            <div class="week-row"><div class="week-label">Sem. 5–6</div><div class="week-bar-wrap"><div class="week-bar var">Ecuaciones de 2° grado incompletas y completas</div></div></div>
+            <div class="week-row"><div class="week-label">Sem. 7</div><div class="week-bar-wrap"><div class="week-bar var">Fórmula cuadrática · Discriminante · Radicales</div></div></div>
+            <div class="week-row"><div class="week-label">Sem. 8–9</div><div class="week-bar-wrap"><div class="week-bar var">Funciones de 2° grado · Bosquejo gráfico</div></div></div>
+            <div class="week-row"><div class="week-label">Sem. 10–11</div><div class="week-bar-wrap"><div class="week-bar var">Parámetros y transformaciones · Herramientas digitales</div></div></div>
+            <div class="week-row"><div class="week-label">Sem. 12</div><div class="week-bar-wrap"><div class="week-bar var">Inecuaciones cuadráticas · Analítico y gráfico</div></div></div>
+            <div class="week-row"><div class="week-label">Sem. 13</div><div class="week-bar-wrap"><div class="week-bar var">Ecuación de la recta · 2 incógnitas</div></div></div>
+            <div class="week-row"><div class="week-label">Sem. 14</div><div class="week-bar-wrap"><div class="week-bar var">Sistemas de ecuaciones · Gráfico y escalerización</div></div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       BLOQUE 3: GEOMETRÍA
+  ═══════════════════════════════════════════ -->
+  <div class="section-block geo" id="geo-block">
+    <div class="section-header" onclick="toggleSection('geo-block')">
+      <div class="section-icon">📐</div>
+      <div class="section-title-wrap">
+        <div class="section-title">Geometría</div>
+        <div class="section-weeks-badge">12 semanas · 48 horas clase</div>
+      </div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="section-body-inner">
+        <div class="tabs geo">
+          <button class="tab-btn active" onclick="switchTab(this,'geo','contenidos')">Contenidos</button>
+          <button class="tab-btn" onclick="switchTab(this,'geo','previos')">Conocimientos previos</button>
+          <button class="tab-btn" onclick="switchTab(this,'geo','objetivos')">Objetivos & Evaluación</button>
+          <button class="tab-btn" onclick="switchTab(this,'geo','metodologia')">Metodología</button>
+          <button class="tab-btn" onclick="switchTab(this,'geo','cronograma')">Cronograma</button>
+        </div>
+
+        <!-- CONTENIDOS -->
+        <div class="tab-panel active" id="geo-contenidos">
+          <div class="subsection-title">Contenidos del bloque</div>
+          <ul class="content-list">
+            <li><span class="dot"></span><strong>Teorema de Pitágoras:</strong> forma directa y recíproca</li>
+            <li><span class="dot"></span><strong>Trigonometría en el triángulo rectángulo:</strong> seno, coseno y tangente de un ángulo agudo</li>
+            <li><span class="dot"></span><strong>Secciones planas</strong> en prismas rectos y pirámides: construcción en verdadera magnitud, perímetros, áreas y volúmenes</li>
+            <li><span class="dot"></span><strong>Ortogonalidad entre rectas</strong> en el espacio</li>
+          </ul>
+        </div>
+
+        <!-- PREVIOS -->
+        <div class="tab-panel" id="geo-previos">
+          <div class="subsection-title">Conocimientos previos requeridos</div>
+          <ul class="content-list">
+            <li><span class="dot"></span>Concepto de ángulo y medición en grados</li>
+            <li><span class="dot"></span>Reconocimiento de triángulos rectángulos y sus elementos</li>
+            <li><span class="dot"></span>Triángulos semejantes y razón de semejanza</li>
+            <li><span class="dot"></span>Reconocimiento de prismas y pirámides, identificando elementos</li>
+            <li><span class="dot"></span>Cálculo de perímetros y áreas</li>
+            <li><span class="dot"></span>Cálculo de volúmenes de prismas y pirámides</li>
+            <li><span class="dot"></span>Concepto de perpendicularidad</li>
+          </ul>
+        </div>
+
+        <!-- OBJETIVOS -->
+        <div class="tab-panel" id="geo-objetivos">
+          <div class="subsection-title">Objetivos de aprendizaje e indicadores</div>
+          <div class="obj-grid">
+
+            <div class="obj-card">
+              <div class="obj-label">Teorema de Pitágoras</div>
+              <div class="obj-text">Aplicar la forma directa y recíproca para determinar longitudes y justificar ángulos rectos.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Calcula longitudes desconocidas en triángulos rectángulos</li>
+                <li>Verifica si un triángulo es rectángulo (forma recíproca)</li>
+                <li>Resuelve problemas identificando triángulos rectángulos en figuras compuestas</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Pitágoras en perímetros/áreas/volúmenes</div>
+              <div class="obj-text">Aplicar el teorema como paso intermedio en cálculos métricos de figuras.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Identifica los triángulos rectángulos necesarios en prismas y pirámides</li>
+                <li>Integra Pitágoras para calcular alturas, diagonales y aristas</li>
+                <li>Verifica resultados con representaciones gráficas o digitales</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Razones trigonométricas</div>
+              <div class="obj-text">Usar seno, coseno y tangente para resolver triángulos rectángulos y problemas contextualizados.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Aplica correctamente sen, cos y tan para hallar longitudes o ángulos</li>
+                <li>Justifica la elección de la razón según los datos del problema</li>
+                <li>Comunica con vocabulario trigonométrico preciso</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Trigonometría en el espacio</div>
+              <div class="obj-text">Verificar cálculos y justificar procedimientos en figuras espaciales y secciones planas.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Valida la coherencia de los cálculos trigonométricos con medidas reales</li>
+                <li>Vincula las razones trig. con los triángulos auxiliares construidos</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Secciones planas</div>
+              <div class="obj-text">Analizar prismas y pirámides para identificar, interpretar y construir secciones planas.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Identifica elementos de prismas y pirámides en representaciones diversas</li>
+                <li>Describe la forma de las secciones según el plano de corte</li>
+                <li>Construye la sección plana en verdadera magnitud (manual o digital)</li>
+              </ul>
+            </div>
+
+            <div class="obj-card">
+              <div class="obj-label">Ortogonalidad</div>
+              <div class="obj-text">Analizar posiciones relativas e identificar condiciones de ortogonalidad en el espacio.</div>
+              <br>
+              <ul class="indicators-list">
+                <li>Identifica rectas y planos perpendiculares con criterios geométricos</li>
+                <li>Justifica presencia o ausencia de ortogonalidad con argumentos métricos</li>
+                <li>Usa recursos concretos o digitales para verificar perpendicularidad</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- METODOLOGÍA -->
+        <div class="tab-panel" id="geo-metodologia">
+          <div class="subsection-title">Sugerencias metodológicas</div>
+          <div class="method-box">
+            <strong>Teorema de Pitágoras:</strong> Aplicar en formas directa y recíproca para calcular medidas y verificar ángulos rectos. Usar representaciones geométricas y herramientas digitales para aproximarse a la demostración.
+          </div>
+          <div class="method-box">
+            <strong>Trigonometría:</strong> Trabajar seno, coseno y tangente para resolver triángulos rectángulos y problemas contextualizados en el plano y el espacio. Utilizar herramientas digitales para visualizar las relaciones.
+          </div>
+          <div class="method-box">
+            <strong>Secciones planas:</strong> Determinar secciones en prismas y pirámides, calcular sus medidas y construirlas en verdadera magnitud. Favorecer el uso de modelos concretos y software de visualización.
+          </div>
+          <div class="method-box">
+            <strong>Ortogonalidad:</strong> Identificar y verificar posiciones relativas entre rectas, profundizar en criterios de perpendicularidad. Usar representaciones gráficas o digitales para justificar decisiones.
+          </div>
+        </div>
+
+        <!-- CRONOGRAMA -->
+        <div class="tab-panel" id="geo-cronograma">
+          <div class="subsection-title">Distribución semanal sugerida</div>
+          <div class="timeline">
+            <div class="week-row"><div class="week-label">Sem. 1–2</div><div class="week-bar-wrap"><div class="week-bar geo">Teorema de Pitágoras · Directo y recíproco</div></div></div>
+            <div class="week-row"><div class="week-label">Sem. 3–4</div><div class="week-bar-wrap"><div class="week-bar geo">Pitágoras en perímetros, áreas y volúmenes</div></div></div>
+            <div class="week-row"><div class="week-label">Sem. 5–6</div><div class="week-bar-wrap"><div class="week-bar geo">Trigonometría · Sen, cos, tan · Triángulo rect.</div></div></div>
+            <div class="week-row"><div class="week-label">Sem. 7–8</div><div class="week-bar-wrap"><div class="week-bar geo">Trigonometría en el espacio · Problemas contextualizados</div></div></div>
+            <div class="week-row"><div class="week-label">Sem. 9–10</div><div class="week-bar-wrap"><div class="week-bar geo">Secciones planas · Prismas y pirámides</div></div></div>
+            <div class="week-row"><div class="week-label">Sem. 11</div><div class="week-bar-wrap"><div class="week-bar geo">Ortogonalidad · Criterios y verificación</div></div></div>
+            <div class="week-row"><div class="week-label">Sem. 12</div><div class="week-bar-wrap"><div class="week-bar geo">Integración · Revisión y evaluación de cierre</div></div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- CRITERIOS GENERALES -->
+  <div style="background: var(--card); border-radius:14px; padding: 1.75rem; box-shadow: var(--shadow); margin-top: 1rem;">
+    <div style="font-family:'Syne',sans-serif; font-weight:800; font-size:1rem; margin-bottom:1.25rem; display:flex; align-items:center; gap:.75rem;">
+      <span style="background:var(--accent); width:32px; height:32px; border-radius:8px; display:grid; place-items:center; font-size:1rem;">📋</span>
+      Criterios Generales de Evaluación
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1rem;">
+      <div style="background:var(--bg); border-radius:10px; padding:1rem; font-size:.8rem; border-left:3px solid var(--accent);">
+        <strong style="font-family:'Syne',sans-serif; font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; display:block; margin-bottom:.5rem; color: #b8922a;">Evaluación formativa</strong>
+        Continua, orientada a valorar procesos y generar oportunidades de revisión. El error se reconoce como parte del aprendizaje.
+      </div>
+      <div style="background:var(--bg); border-radius:10px; padding:1rem; font-size:.8rem; border-left:3px solid var(--accent);">
+        <strong style="font-family:'Syne',sans-serif; font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; display:block; margin-bottom:.5rem; color: #b8922a;">Instrumentos variados</strong>
+        Proyectos, presentaciones, portafolios y producciones colaborativas, contemplando diversidad de métodos y estrategias.
+      </div>
+      <div style="background:var(--bg); border-radius:10px; padding:1rem; font-size:.8rem; border-left:3px solid var(--accent);">
+        <strong style="font-family:'Syne',sans-serif; font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; display:block; margin-bottom:.5rem; color: #b8922a;">Auto y coevaluación</strong>
+        Instancias de autoevaluación y evaluación entre pares para reflexionar sobre el propio proceso de aprendizaje.
+      </div>
+      <div style="background:var(--bg); border-radius:10px; padding:1rem; font-size:.8rem; border-left:3px solid var(--accent);">
+        <strong style="font-family:'Syne',sans-serif; font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; display:block; margin-bottom:.5rem; color: #b8922a;">Transparencia</strong>
+        El estudiantado conoce anticipadamente los mecanismos de evaluación para orientar su trayectoria de aprendizaje.
+      </div>
+    </div>
+  </div>
+
+  <!-- BIBLIOGRAFÍA -->
+  <div style="max-width:960px; margin: 2.5rem auto 0; padding: 0 1.5rem 4rem;">
+
+    <div style="background:var(--card); border-radius:14px; box-shadow:var(--shadow); overflow:hidden;">
+
+      <!-- header bib -->
+      <div style="background:var(--ink); padding:1.4rem 1.75rem; display:flex; align-items:center; gap:1rem; cursor:pointer;" onclick="toggleBib()">
+        <div style="width:44px;height:44px;border-radius:10px;background:var(--accent);display:grid;place-items:center;font-size:1.3rem;flex-shrink:0;">📚</div>
+        <div style="flex:1;">
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--bg);">Bibliografía y Recursos</div>
+          <div style="font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;color:#6a6058;margin-top:.1rem;">Docentes · Estudiantes · Referencias</div>
+        </div>
+        <div id="bib-chevron" style="width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.1);display:grid;place-items:center;font-size:.8rem;color:var(--bg);transition:transform .3s;">▾</div>
+      </div>
+
+      <!-- body bib -->
+      <div id="bib-body" style="max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1);">
+        <div style="padding:1.75rem;">
+
+          <!-- tabs bib -->
+          <div class="tabs" style="margin-bottom:1.5rem;" id="bib-tabs">
+            <button class="tab-btn" style="border-color:var(--ink);color:var(--ink);" id="bib-tab-doc" onclick="switchBibTab('doc')" >Para docentes</button>
+            <button class="tab-btn" id="bib-tab-est" onclick="switchBibTab('est')">Para estudiantes</button>
+            <button class="tab-btn" id="bib-tab-ref" onclick="switchBibTab('ref')">Referencias teóricas</button>
+          </div>
+
+          <!-- panel docentes -->
+          <div id="bib-doc" class="bib-panel">
+            <div class="subsection-title">Recursos para docentes</div>
+            <div style="display:flex;flex-direction:column;gap:.75rem;">
+
+              <div class="bib-card">
+                <div class="bib-badge bib-digital">🌐 Digital</div>
+                <div class="bib-title">Plataforma CREA — Grupo MATEMAC</div>
+                <div class="bib-author">ANEP · Dirección General de Educación Secundaria</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-libro">📖 Libro</div>
+                <div class="bib-title">Estrechando lazos entre investigación y formación en Matemática Educativa (Vol. I–VIII)</div>
+                <div class="bib-author">Buendía, G., Molfino, V. y Ochoviet, C. (2014) — ANEP / CFE</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-digital">🌐 Digital</div>
+                <div class="bib-title">Aprender a enseñar matemáticas en secundaria</div>
+                <div class="bib-author">Calvo, C., Deulofeu, J., Jareño, J. y Morera (2016)</div>
+                <a class="bib-link" href="https://sites.google.com/site/aprenderaensenarmatematicas" target="_blank">sites.google.com/site/aprenderaensenarmatematicas ↗</a>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-digital">🌐 Digital</div>
+                <div class="bib-title">PuntMat</div>
+                <div class="bib-author">Cerezo, A. y Calvo, C. (2020)</div>
+                <a class="bib-link" href="https://puntmat.blogspot.com/" target="_blank">puntmat.blogspot.com ↗</a>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-libro">📖 Libro</div>
+                <div class="bib-title">Otras miradas: Aportaciones de las mujeres a las matemáticas</div>
+                <div class="bib-author">Federación de Enseñanza de CCOO (2011) — Madrid</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-digital">🌐 Digital</div>
+                <div class="bib-title">GeoGebra — Herramientas y recursos</div>
+                <div class="bib-author">GeoGebra Institute</div>
+                <a class="bib-link" href="https://www.geogebra.org/" target="_blank">geogebra.org ↗</a>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-libro">📖 Libro</div>
+                <div class="bib-title">Matemáticas en contexto — Materiales de aula</div>
+                <div class="bib-author">Holt, Rinehart, Winston (2016) — Instituto Freudenthal</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-digital">🌐 Digital</div>
+                <div class="bib-title">Which One Doesn't Belong?</div>
+                <div class="bib-author">Hunter, Ch. et al. (2013)</div>
+                <a class="bib-link" href="https://talkingmathwithkids.com/wodb/" target="_blank">talkingmathwithkids.com/wodb ↗</a>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-digital">🌐 Digital</div>
+                <div class="bib-title">Mathigon — El patio de recreo matemático</div>
+                <div class="bib-author">Mathigon (2023)</div>
+                <a class="bib-link" href="https://mathigon.org/" target="_blank">mathigon.org ↗</a>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-digital">🌐 Digital</div>
+                <div class="bib-title">Khan Academy</div>
+                <a class="bib-link" href="https://es.khanacademy.org/" target="_blank">es.khanacademy.org ↗</a>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-digital">🌐 Digital</div>
+                <div class="bib-title">Polypad — Herramientas manipulativas digitales</div>
+                <div class="bib-author">Amplify</div>
+                <a class="bib-link" href="https://polypad.amplify.com/es/" target="_blank">polypad.amplify.com/es ↗</a>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-libro">📖 Libro</div>
+                <div class="bib-title">Historia de la Matemática (Vol. I y II)</div>
+                <div class="bib-author">Rey Pastor, J. y Babini, J. (1951–1952) — Editorial Losada</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-digital">🌐 Digital</div>
+                <div class="bib-title">Matemática: Función cuadrática, parábola y ecuaciones de segundo grado</div>
+                <div class="bib-author">Sessa, C., Illuzi, A. (2014) — Ministerio de Educación, Buenos Aires</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-digital">🌐 Digital</div>
+                <div class="bib-title">El lenguaje de funciones y gráficas</div>
+                <div class="bib-author">Shell Center for Mathematical Education; trad. Alayo, F. (1990) — Univ. del País Vasco</div>
+                <a class="bib-link" href="https://cursopg2010.wordpress.com/wp-content/uploads/2010/12/el_lenguaje_de_funciones.pdf" target="_blank">Ver PDF ↗</a>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-digital">🌐 Digital</div>
+                <div class="bib-title">Nrich — Secondary Students</div>
+                <div class="bib-author">University of Cambridge (2024)</div>
+                <a class="bib-link" href="https://nrich.maths.org/secondary" target="_blank">nrich.maths.org/secondary ↗</a>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-digital">🌐 Digital</div>
+                <div class="bib-title">El rol de las definiciones en la enseñanza y aprendizaje de la matemática</div>
+                <div class="bib-author">Vinner, S. (1991) — en: Advanced Mathematical Thinking, ed. Tall, D.</div>
+                <a class="bib-link" href="https://es.scribd.com/document/504011791/Rol-de-Las-Definiciones-Vinner" target="_blank">Ver en Scribd ↗</a>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- panel estudiantes -->
+          <div id="bib-est" class="bib-panel" style="display:none;">
+            <div class="subsection-title">Recursos para estudiantes</div>
+            <div style="display:flex;flex-direction:column;gap:.75rem;">
+
+              <div class="bib-card">
+                <div class="bib-badge bib-libro">📖 Libro digital</div>
+                <div class="bib-title">Matemática 3</div>
+                <div class="bib-author">Borbonet, M., Burgos, B., Martínez, A., Ravaioli, M. (2012) — Editorial Fin de Siglo</div>
+                <a class="bib-link" href="https://bibliotecapais.ceibal.edu.uy/info/matematica-3-00043010" target="_blank">Biblioteca País — Ceibal ↗</a>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-libro">📖 Libro digital</div>
+                <div class="bib-title">Prácticas 3</div>
+                <div class="bib-author">Da Costa, S. y Scorza, V. (2012) — Santillana</div>
+                <a class="bib-link" href="https://bibliotecapais.ceibal.edu.uy/info/matematica-3-practicas-00004145" target="_blank">Biblioteca País — Ceibal ↗</a>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-digital">🌐 Digital</div>
+                <div class="bib-title">GeoGebra — Herramientas y recursos</div>
+                <a class="bib-link" href="https://www.geogebra.org/" target="_blank">geogebra.org ↗</a>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-libro">📖 Libro digital</div>
+                <div class="bib-title">Matemática 9 <span style="font-size:.7rem;background:#eef4fd;color:#2563a8;padding:.1rem .4rem;border-radius:4px;margin-left:.3rem;">Recomendado</span></div>
+                <div class="bib-author">Ochoviet, C.; Olave, M. (2024) — Editorial Contexto, 1ª Edición Digital</div>
+                <a class="bib-link" href="https://bibliotecapais.ceibal.edu.uy/info/matematica-3-00034225" target="_blank">Biblioteca País — Ceibal ↗</a>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-libro">📖 Libro digital</div>
+                <div class="bib-title">Pifias Matemáticas: equivocarse nunca ha sido tan divertido</div>
+                <div class="bib-author">Parker, M. (2020) — Crítica</div>
+                <a class="bib-link" href="https://bibliotecapais.ceibal.edu.uy/info/pifias-matematicas-equivocarse-nunca-ha-sido-tan-divertido-00015627" target="_blank">Biblioteca País — Ceibal ↗</a>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- panel referencias -->
+          <div id="bib-ref" class="bib-panel" style="display:none;">
+            <div class="subsection-title">Referencias bibliográficas del programa</div>
+            <div style="display:flex;flex-direction:column;gap:.75rem;">
+
+              <div class="bib-card">
+                <div class="bib-badge bib-inst">🏛 Institucional</div>
+                <div class="bib-title">Uruguay en PISA 2015 — Informe de Resultados</div>
+                <div class="bib-author">ANEP (2017)</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-inst">🏛 Institucional</div>
+                <div class="bib-title">Marco conceptual de Matemática — Programa PISA Uruguay</div>
+                <div class="bib-author">ANEP (2022)</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-inst">🏛 Institucional</div>
+                <div class="bib-title">Programa de Educación Media Superior DGES-DGETP, tramo 7, grado 1°</div>
+                <div class="bib-author">ANEP (2023)</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-inst">🏛 Institucional</div>
+                <div class="bib-title">Orientaciones para el abordaje: Educación en Sexualidad (Res. N.º 708/024)</div>
+                <div class="bib-author">ANEP (2024)</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-inst">🏛 Institucional</div>
+                <div class="bib-title">IA para enseñar, enseñar IA — Marco referencial docente sobre inteligencia artificial</div>
+                <div class="bib-author">Ceibal – ANEP (2025)</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-libro">📖 Libro</div>
+                <div class="bib-title">Estrategias de enseñanza: otra mirada al quehacer en el aula</div>
+                <div class="bib-author">Anijovich, R. (2010) — Aique</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-libro">📖 Capítulo</div>
+                <div class="bib-title">Fundamentos y método de la didáctica de las Matemáticas</div>
+                <div class="bib-author">Brousseau, G. (1993) — en: Lecturas de didáctica de las matemáticas, escuela francesa</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-libro">📖 Artículo</div>
+                <div class="bib-title">Tratamiento didáctico interdisciplinario de funciones matemáticas</div>
+                <div class="bib-author">Castillo, Y. y Gamboa, M. (2020) — Revista Didasc@lia</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-libro">📖 Libro</div>
+                <div class="bib-title">Didáctica Práctica para enseñanza media y superior</div>
+                <div class="bib-author">Fiore, E. y Leymonié, J. (2007) — Editorial Grupo Magro</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-libro">📖 Libro</div>
+                <div class="bib-title">La educación matemática realista y su aplicación en el aula de clases</div>
+                <div class="bib-author">Mendoza, R., Rocha, V., Arbañil, R. et al. (2023) — Editorial Mar Caribe</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-inst">🏛 Institucional</div>
+                <div class="bib-title">Educación y Derechos Humanos: orientaciones para el aula</div>
+                <div class="bib-author">Ministerio de Educación y Cultura – Uruguay (2019)</div>
+              </div>
+
+              <div class="bib-card">
+                <div class="bib-badge bib-libro">📖 Capítulo</div>
+                <div class="bib-title">La competencia matemática en PISA</div>
+                <div class="bib-author">Rico, L. (2005) — en: La enseñanza de las matemáticas y el Informe PISA (pp. 21-40), Santillana</div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  Matemática · 9° EBI · DGES — Versión final Comisión de Programa · 4 horas semanales
+</footer>
+
+<script>
+  function toggleSection(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('open');
+  }
+
+  function expandAll() {
+    document.querySelectorAll('.section-block').forEach(b => b.classList.add('open'));
+  }
+
+  function collapseAll() {
+    document.querySelectorAll('.section-block').forEach(b => b.classList.remove('open'));
+  }
+
+  function switchTab(btn, prefix, tabName) {
+    // deactivate all tabs in this block
+    const block = btn.closest('.section-block');
+    block.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    block.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    // activate selected
+    btn.classList.add('active');
+    const panel = document.getElementById(prefix + '-' + tabName);
+    if (panel) panel.classList.add('active');
+  }
+
+  function toggleBib() {
+    const body = document.getElementById('bib-body');
+    const chev = document.getElementById('bib-chevron');
+    if (body.style.maxHeight === '0px' || body.style.maxHeight === '') {
+      body.style.maxHeight = '6000px';
+      chev.style.transform = 'rotate(180deg)';
+      // activate first tab if none active
+      switchBibTab('doc');
+    } else {
+      body.style.maxHeight = '0px';
+      chev.style.transform = '';
+    }
+  }
+
+  function switchBibTab(tab) {
+    ['doc','est','ref'].forEach(t => {
+      document.getElementById('bib-' + t).style.display = t === tab ? 'block' : 'none';
+      const btn = document.getElementById('bib-tab-' + t);
+      if (btn) {
+        btn.classList.toggle('active', t === tab);
+        // color the active tab with accent color
+        if (t === tab) {
+          btn.style.background = '#1a1714';
+          btn.style.borderColor = '#1a1714';
+          btn.style.color = '#f5f2eb';
+        } else {
+          btn.style.background = '';
+          btn.style.borderColor = '';
+          btn.style.color = '';
+        }
+      }
+    });
+  }
+
+  // Open all on load for a quick preview feel, then allow collapse
+  // (start collapsed for cleanliness)
+</script>
+</body>
+</html>
